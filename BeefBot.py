@@ -65,10 +65,11 @@ async def msgAnal(ctx):
     channelName = str(ctx.channel)
     file_location = (channelName + "data.csv")
     #creates csv file in github?
-    f = repo.create_file(filename, "PyGithub - messages data csv", df.to_csv(filename))
+    await ctx.send('Anal in progress')
+    repo.create_file(filename, "PyGithub - messages data csv", df.to_csv(filename))
     df.to_csv(file_location)
     print('Finished',ctx.channel)
-    await ctx.send('Anal Finished')    
+    await ctx.send('Anal Finished :)')    
 
 client.run(os.getenv('BOT_TOKEN'))
 
