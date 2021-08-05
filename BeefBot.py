@@ -14,7 +14,11 @@ from github import Github
 import pandas as pd
 
 client = commands.Bot(command_prefix = '!')
+#github credential setup
 github = Github(os.getenv("GITHUB_TOKEN"))
+repo = github.get_user().get_repo('beef-bot-discord')
+#path in repo
+filename = 'messagesLog.csv'
 
 @client.event
 async def on_ready():
@@ -60,6 +64,8 @@ async def msgAnal(ctx):
                 df[msg.author] = [1]
     channelName = str(ctx.channel)
     file_location = (channelName + "data.csv")
+    #creates csv file in github?
+    f = repo.create_file(filename, "create_file via PyGithub", df.to_csv(filename))
     df.to_csv(file_location)
     print('Finished',ctx.channel)
     await ctx.send('Anal Finished')    
