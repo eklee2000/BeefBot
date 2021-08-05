@@ -18,7 +18,7 @@ client = commands.Bot(command_prefix = '!')
 github = Github(os.getenv("GITHUB_TOKEN"))
 repo = github.get_user().get_repo('beef-bot-discord')
 #path in repo
-filename = 'messagesLog.csv'
+filename = '/messagesLog.csv'
 
 @client.event
 async def on_ready():
@@ -55,7 +55,7 @@ async def Aidan(ctx): #context = ctx
 @client.command() #message analysis
 async def msgAnal(ctx):
     df = pd.DataFrame([[0]], index=[0], columns=['Filler'])
-    massages = await ctx.channel.history(limit= 100000).flatten()
+    massages = await ctx.channel.history(limit= 1000).flatten()
     for msg in massages:
         if msg.author != client.user:
             if msg.author in df.columns:
@@ -65,7 +65,7 @@ async def msgAnal(ctx):
     channelName = str(ctx.channel)
     file_location = (channelName + "data.csv")
     #creates csv file in github?
-    f = repo.create_file(filename, "create_file via PyGithub", df.to_csv(filename))
+    f = repo.create_file(filename, "PyGithub - messages data csv", df.to_csv(filename))
     df.to_csv(file_location)
     print('Finished',ctx.channel)
     await ctx.send('Anal Finished')    
