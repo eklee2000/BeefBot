@@ -9,6 +9,7 @@
 
 import discord
 from discord.ext import commands
+import pandas as pd
 
 client = commands.Bot(command_prefix = '!')
 
@@ -45,7 +46,21 @@ async def ping(ctx): #context = ctx
 async def Aidan(ctx): #context = ctx
     await ctx.send('Aidan is significantly more attractive and more interesting than me, and so is his girlfriend. My girlfriend is very ugly. And so am I. These are facts. Debate me.')
 
-    
+@client.command() #message analysis
+async def msgAnal(ctx):
+    df = pd.DataFrame([[0]], index=[0], columns=['Filler'])
+    massages = await ctx.channel.history(limit= 10000).flatten()
+    for msg in massages:
+        if msg.author != client.user:
+            if msg.author in df.columns:
+                df.at[0,msg.author] += 1
+            else:
+                df[msg.author] = [1]
+    channelName = str(ctx.channel)
+    file_location = (channelName + "data.csv")
+    df.to_csv(file_location)
+    print('Finished',ctx.channel)
+    await ctx.send('Anal Finished')    
 
 client.run('process.env.BOT_TOKEN')
 
