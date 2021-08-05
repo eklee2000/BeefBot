@@ -51,7 +51,7 @@ async def Aidan(ctx): #context = ctx
 @client.command() #message analysis
 async def msgAnal(ctx):
     df = pd.DataFrame([[0]], index=[0], columns=['Filler'])
-    massages = await ctx.channel.history(limit= 10000).flatten()
+    massages = await ctx.channel.history(limit= 100000).flatten()
     for msg in massages:
         if msg.author != client.user:
             if msg.author in df.columns:
