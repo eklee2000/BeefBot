@@ -7,6 +7,7 @@
 #help https://discordpy.readthedocs.io/en/stable/index.html
 #https://www.youtube.com/watch?v=nW8c7vT6Hl4
 
+import os
 import discord
 from discord.ext import commands
 import pandas as pd

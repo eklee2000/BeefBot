@@ -1,1 +1,1 @@
-worker: python BeefBot.py
+worker: python3 BeefBot.py
