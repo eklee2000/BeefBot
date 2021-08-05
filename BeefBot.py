@@ -24,6 +24,7 @@ for y in x:
 dataRef = repo.get_git_ref("heads/data")
 
 filename = 'messagesLog.csv'
+msgAnalysisLimit = 25000
 
 @client.event
 async def on_ready():
@@ -60,7 +61,7 @@ async def Aidan(ctx): #context = ctx
 @client.command() #message analysis
 async def msgAnal(ctx):
     df = pd.DataFrame([[0]], index=[0], columns=['Filler'])
-    massages = await ctx.channel.history(limit= 1000).flatten()
+    massages = await ctx.channel.history(limit= msgAnalysisLimit).flatten()
 
     #Save contents to get sha every time analysis is done: new file every time!
     csvFile = repo.get_contents(filename, ref="heads/data")
@@ -89,6 +90,6 @@ async def msgAnal(ctx):
     #creates csv file in github in data branch (not main!)
     repo.update_file(filename, "PyGithub - messages data csv", stringFormat, csvFile.sha, branch = "data")
     print('Finished',ctx.channel)
-    # await ctx.send('Anal Finished :)')    
+    await ctx.send('Anal Finished :)')    
 
 client.run(os.getenv('BOT_TOKEN'))
