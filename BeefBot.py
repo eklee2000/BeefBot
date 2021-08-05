@@ -62,5 +62,5 @@ async def msgAnal(ctx):
     print('Finished',ctx.channel)
     await ctx.send('Anal Finished')    
 
-client.run('process.env.BOT_TOKEN')
+client.run(os.getenv('BOT_TOKEN'))
 
