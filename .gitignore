@@ -1,5 +1,6 @@
 beef.env
-# Byte-compiled / optimized / DLL files 
+pie.png
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
