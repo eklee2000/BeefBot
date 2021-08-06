@@ -69,7 +69,7 @@ async def pog(ctx):  # context = ctx
     # for i in pogArr:
     #     emoji = i
     await ctx.send(f'{pogArr[0]}{pogArr[1]}{pogArr[2]}\n{pogArr[3]}{pogArr[4]}{pogArr[5]}\n{pogArr[6]}{pogArr[7]}{pogArr[8]}\n')
-    await client.delete_message(ctx.message)
+    await ctx.message.delete()
 
 
 @client.command()
