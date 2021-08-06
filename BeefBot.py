@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[4]:
-
-
 #help https://discordpy.readthedocs.io/en/stable/index.html
 #https://www.youtube.com/watch?v=nW8c7vT6Hl4
 
 import os
+import io
 import discord
 from discord.ext import commands
 from github import Github
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 client = commands.Bot(command_prefix = '!')
@@ -23,6 +22,7 @@ for y in x:
     print(y)
 dataRef = repo.get_git_ref("heads/data")
 
+pieChartName = 'pie.png'
 filename = 'messagesLog.csv'
 msgAnalysisLimit = 25000
 
@@ -60,19 +60,25 @@ async def Aidan(ctx): #context = ctx
 
 @client.command() #message analysis
 async def msgAnal(ctx):
-    df = pd.DataFrame([[0]], index=[0], columns=['Filler'])
-    massages = await ctx.channel.history(limit= msgAnalysisLimit).flatten()
+    messages = await ctx.channel.history(limit= msgAnalysisLimit).flatten()
 
     #Save contents to get sha every time analysis is done: new file every time!
     csvFile = repo.get_contents(filename, ref="heads/data")
 
     msgDict = {}
-    for msg in massages:
+    for msg in messages:
         if msg.author != client.user:
             if msg.author.name in msgDict.keys():
                 msgDict.update({msg.author.name: msgDict[msg.author.name] + 1})
             else:
                 msgDict[msg.author.name] = 1
+    #dataframe for plot visualization
+    df = pd.DataFrame(msgDict.items(), columns=["Name", "Messages Sent"])
+    df = df.set_index('Name')
+    piePlot = (df.plot(x = "Name", y = "Messages Sent", kind = "pie", autopct = '%1.1f%%', figsize = (10,10)).get_figure())
+    piePlot.savefig(pieChartName)
+    image = discord.File(pieChartName)
+    await ctx.send(file = image)
     channelName = str(ctx.channel)
 
     stringFormat = ''
