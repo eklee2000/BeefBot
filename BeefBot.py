@@ -77,7 +77,7 @@ async def msgAnal(ctx):
     df = df.set_index('Name')
     df.sort_values(by="Messages Sent", ascending = False)
     pieDf = df.head(15)
-    piePlot = (pieDf.plot(x = "Name", y = "Messages Sent", kind = "pie", autopct = '%1.1f%%', figsize = (10,10)).get_figure())
+    piePlot = (pieDf.plot(x = "Name", y = "Messages Sent", kind = "pie", autopct = '%1.1f%%', figsize = (15,15)).get_figure())
     piePlot.savefig(pieChartName)
     image = discord.File(pieChartName)
     await ctx.send(file = image)
