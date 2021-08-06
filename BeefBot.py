@@ -53,7 +53,7 @@ async def ping(ctx):  # context = ctx
     await ctx.send('Pong!')
 
 
-@client.command()
+@client.command(pass_context = True)
 async def pog(ctx):  # context = ctx
     # pogArr = ['475181449105113098', '475181455354494986', '475181460924661760', '475181470294474762', '475181475851927571', '475181481338077185', '475181486878752768', '475181492163706881', '475181497905577984']
     pogArr = ['<:1_:475181449105113098>',
@@ -68,6 +68,7 @@ async def pog(ctx):  # context = ctx
     # emojiArr = []
     # for i in pogArr:
     #     emoji = i
+    await client.delete_message(ctx.message)
     await ctx.send(f'{pogArr[0]}{pogArr[1]}{pogArr[2]}\n{pogArr[3]}{pogArr[4]}{pogArr[5]}\n{pogArr[6]}{pogArr[7]}{pogArr[8]}\n')
 
 
