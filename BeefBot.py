@@ -54,6 +54,15 @@ async def on_message(message):
 async def ping(ctx): #context = ctx
     await ctx.send('Pong!')
 
+@client.command()
+async def pog(ctx): #context = ctx
+    await ctx.send(':1_::2_::3_:\n:4_::5_::6_:\n:7_::8_::9_:')
+
+@client.command()
+async def beef(ctx, name): #context = ctx
+    await ctx.send(f"""I'm telling you, {name} is as cracked as he is jacked. I saw him at a 7-11 the other day buying Monster and adult diapers. 
+    I asked him what the diapers were for and he said "they contain my full power so I don’t completely shit on these kids" then he rode a boar out the door""")
+
 @client.command(aliases=['aidan'])
 async def Aidan(ctx): #context = ctx
     await ctx.send('Aidan is significantly more attractive and more interesting than me, and so is his girlfriend. My girlfriend is very ugly. And so am I. These are facts. Debate me.')
