@@ -24,7 +24,7 @@ dataRef = repo.get_git_ref("heads/data")
 
 pieChartName = 'pie.png'
 filename = 'messagesLog.csv'
-msgAnalysisLimit = 1000
+msgAnalysisLimit = 10000
 
 @client.event
 async def on_ready():
@@ -75,9 +75,11 @@ async def msgAnal(ctx):
     #dataframe for plot visualization
     df = pd.DataFrame(msgDict.items(), columns=["Name", "Messages Sent"])
     df = df.set_index('Name')
-    df.sort_values(by="Messages Sent", ascending = False)
+    df = df.sort_values(by="Messages Sent", ascending = False)
     pieDf = df.head(15)
-    piePlot = (pieDf.plot(x = "Name", y = "Messages Sent", kind = "pie", autopct = '%1.1f%%', figsize = (15,15)).get_figure())
+    piePlot = (pieDf.plot(x = "Name", y = "Messages Sent", kind = "pie", autopct = '%1.1f%%', figsize = (10,10)).get_figure())
+    piePlot.legend(['Legend'], loc="upper right")
+    piePlot.title("Proportion of Messages Sent")
     piePlot.savefig(pieChartName)
     image = discord.File(pieChartName)
     await ctx.send(file = image)
