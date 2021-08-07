@@ -14,7 +14,7 @@ import pandas as pd
 
 client = commands.Bot(command_prefix='!')
 # github credential setup
-github = Github(os.getenv("GITHUB_TOKEN"))
+github = Github("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")
 repo = github.get_user().get_repo('beef-bot-discord')
 #path in repo
 x = repo.get_git_refs()
@@ -132,4 +132,4 @@ async def msgAnal(ctx):
     print('Finished', ctx.channel)
     await ctx.send('Anal Finished :)')
 
-client.run(os.getenv('BOT_TOKEN'))
+client.run("ODcyNTY2ODkwNTI0OTgzMzM2.YQrvPg.cA7eTvj73xkEsqIXaBhMnLVNWgY")
