@@ -78,8 +78,8 @@ async def beef(ctx, name):  # context = ctx
 
 
 @client.command(aliases=['aidan'])
-async def Aidan(ctx):  # context = ctx
-    await ctx.send('Aidan is significantly more attractive and more interesting than me, and so is his girlfriend. My girlfriend is very ugly. And so am I. These are facts. Debate me.')
+async def Aidan(ctx, name):  # context = ctx
+    await ctx.send(f'Aidan is significantly more attractive and more interesting than {name}, and so is his girlfriend. My girlfriend is very ugly. And so is {name}. These are facts. Debate me.')
 
 
 @client.command()  # message analysis
