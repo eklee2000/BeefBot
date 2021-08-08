@@ -1,5 +1,6 @@
 discord.py
 async-timeout
+discord-py-slash-command
 PyGithub
 requests
 matplotlib
