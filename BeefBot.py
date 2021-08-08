@@ -6,15 +6,19 @@
 import os
 import io
 import discord
+from discord_slash import SlashCommand
 from discord.ext import commands
 from github import Github
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+guild_ids = [707683542238494760]
+
 client = commands.Bot(command_prefix='!')
+slash = SlashCommand(client, sync_commands=True)
 # github credential setup
-github = Github(os.getenv("GITHUB_TOKEN"))
+github = Github("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")
 repo = github.get_user().get_repo('beef-bot-discord')
 #path in repo
 x = repo.get_git_refs()
@@ -24,7 +28,7 @@ dataRef = repo.get_git_ref("heads/data")
 
 pieChartName = 'pie.png'
 filename = 'messagesLog.csv'
-msgAnalysisLimit = 10000
+msgAnalysisLimit = 1000
 
 
 @client.event
@@ -132,4 +136,8 @@ async def msgAnal(ctx):
     print('Finished', ctx.channel)
     await ctx.send('Anal Finished :)')
 
-client.run(os.getenv('BOT_TOKEN'))
+@slash.slash(name = "dad", guild_ids = guild_ids)
+async def _dad(ctx):
+    await ctx.send(f'I hate dad bot')
+
+client.run("ODcyNTY2ODkwNTI0OTgzMzM2.YQrvPg.cA7eTvj73xkEsqIXaBhMnLVNWgY")
