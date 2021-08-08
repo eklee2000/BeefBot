@@ -18,7 +18,7 @@ guild_ids = [707683542238494760]
 client = commands.Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
 # github credential setup
-github = Github("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")
+github = Github(os.getenv("GITHUB_TOKEN"))
 repo = github.get_user().get_repo('beef-bot-discord')
 #path in repo
 x = repo.get_git_refs()
@@ -29,6 +29,16 @@ dataRef = repo.get_git_ref("heads/data")
 pieChartName = 'pie.png'
 filename = 'messagesLog.csv'
 msgAnalysisLimit = 1000
+
+pogArr = ['<:1_:475181449105113098>',
+               '<:2_:475181455354494986>',
+               '<:3_:475181460924661760>',
+               '<:4_:475181470294474762>',
+               '<:5_:475181475851927571>',
+               '<:6_:475181481338077185>',
+               '<:7_:475181486878752768>',
+               '<:8_:475181492163706881>',
+               '<:9_:475181497905577984>']
 
 
 @client.event
@@ -59,19 +69,6 @@ async def ping(ctx):  # context = ctx
 
 @client.command(pass_context = True)
 async def pog(ctx):  # context = ctx
-    # pogArr = ['475181449105113098', '475181455354494986', '475181460924661760', '475181470294474762', '475181475851927571', '475181481338077185', '475181486878752768', '475181492163706881', '475181497905577984']
-    pogArr = ['<:1_:475181449105113098>',
-               '<:2_:475181455354494986>',
-               '<:3_:475181460924661760>',
-               '<:4_:475181470294474762>',
-               '<:5_:475181475851927571>',
-               '<:6_:475181481338077185>',
-               '<:7_:475181486878752768>',
-               '<:8_:475181492163706881>',
-               '<:9_:475181497905577984>']
-    # emojiArr = []
-    # for i in pogArr:
-    #     emoji = i
     await ctx.send(f'{pogArr[0]}{pogArr[1]}{pogArr[2]}\n{pogArr[3]}{pogArr[4]}{pogArr[5]}\n{pogArr[6]}{pogArr[7]}{pogArr[8]}\n')
     await ctx.message.delete()
 
@@ -136,8 +133,8 @@ async def msgAnal(ctx):
     print('Finished', ctx.channel)
     await ctx.send('Anal Finished :)')
 
-@slash.slash(name = "dad", guild_ids = guild_ids)
-async def _dad(ctx):
-    await ctx.send(f'I hate dad bot')
+@slash.slash(name = "pog", guild_ids = guild_ids)
+async def _pog(ctx):
+    await ctx.send(f'{pogArr[0]}{pogArr[1]}{pogArr[2]}\n{pogArr[3]}{pogArr[4]}{pogArr[5]}\n{pogArr[6]}{pogArr[7]}{pogArr[8]}\n')
 
-client.run("ODcyNTY2ODkwNTI0OTgzMzM2.YQrvPg.cA7eTvj73xkEsqIXaBhMnLVNWgY")
+client.run(os.getenv('BOT_TOKEN'))
