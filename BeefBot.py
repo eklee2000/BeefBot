@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-guild_ids = [707683542238494760]
+guild_ids = [168168226994388992, 707683542238494760]
 
 client = commands.Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
