@@ -140,8 +140,8 @@ async def msgAnal(ctx):
     print('Finished', ctx.channel)
     await ctx.send('Anal Finished :)')
 
-@slash.slash(name = 'stardewGifts', guild_ids = guild_ids,
-            description = "Shows Liked/Loved gifts for NPCs in Stardew Valley Expanded",
+@slash.slash(name = 'stardewExpandedGifts', guild_ids = guild_ids,
+            description = "Shows Liked/Loved gifts for ONLY NEW NPCs in Stardew Valley Expanded",
             options = [
                     create_option(
                         name = "npc",
