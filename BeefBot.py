@@ -141,7 +141,7 @@ async def msgAnal(ctx):
     print('Finished', ctx.channel)
     await ctx.send('Anal Finished :)')
 
-@slash.slash(name = 'stardewGifts', guild_ids = guild_ids,
+@slash.slash(name = 'stardewExpandedGifts', guild_ids = guild_ids,
             description = "Shows Liked/Loved gifts for NPCs in Stardew Valley Expanded",
             options = [
                     create_option(
@@ -151,7 +151,7 @@ async def msgAnal(ctx):
                         required = True
                     )
             ])
-async def _stardewGifts(ctx, npc: str):
+async def _stardewExpandedGifts(ctx, npc: str):
     npc = npc.capitalize()
     #Navigate to npc page
     page = requests.get(SVE_WIKI_BASE_URL + npc)
