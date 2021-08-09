@@ -1,6 +1,8 @@
 discord.py
 async-timeout
 discord-py-slash-command
+bs4
+beautifulsoup4
 PyGithub
 requests
 matplotlib
