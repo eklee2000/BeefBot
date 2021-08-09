@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 
+STARDEW_BASE_URL = 'https://stardewvalleywiki.com/'
 SVE_WIKI_BASE_URL = 'https://stardew-valley-expanded.fandom.com/wiki/'
 guild_ids = [168168226994388992, 707683542238494760]
 
@@ -140,8 +141,8 @@ async def msgAnal(ctx):
     print('Finished', ctx.channel)
     await ctx.send('Anal Finished :)')
 
-@slash.slash(name = 'stardewExpandedGifts', guild_ids = guild_ids,
-            description = "Shows Liked/Loved gifts for ONLY NEW NPCs in Stardew Valley Expanded",
+@slash.slash(name = 'stardewGifts', guild_ids = guild_ids,
+            description = "Shows Liked/Loved gifts for NPCs in Stardew Valley Expanded",
             options = [
                     create_option(
                         name = "npc",
@@ -192,6 +193,58 @@ async def _stardewGifts(ctx, npc: str):
         link = link['href']
         if 'stardewvalleyexpanded' not in link:
             link = SVE_WIKI_BASE_URL + link
+        embed.add_field(name = name, value = link, inline = True)
+    await ctx.send(embed = embed)
+
+@slash.slash(name = 'stardewBaseGifts', guild_ids = guild_ids,
+            description = "Shows Liked/Loved gifts for base NPCs in Stardew Valley",
+            options = [
+                    create_option(
+                        name = "npc",
+                        description = "Original NPC in Stardew Valley you want to gift to",
+                        option_type = 3,
+                        required = True
+                    )
+            ])
+async def _stardewBaseGifts(ctx, npc: str):
+    npc = npc.capitalize()
+    #Navigate to npc page
+    page = requests.get(STARDEW_BASE_URL + npc)
+    pageScraper = BeautifulSoup(page.content, 'html.parser')
+    embed = discord.Embed(title = f"{npc}'s Loved/Liked Gifts",
+                            url = STARDEW_BASE_URL + npc,
+                            color = 0xFF0000)
+    npcPic = pageScraper.find_all('ul', class_ = "gallery")[1]
+    imgTag = npcPic.find_all('img')[0]
+    # imgTag = npcPic.find('img')
+    thumbnailPic = STARDEW_BASE_URL + imgTag['src']
+    #Set embed thumbnail
+    embed.set_thumbnail(url = thumbnailPic)
+    lovedGiftTable = pageScraper.find_all(id = "roundedborder")[0]
+    tableLen = len(lovedGiftTable.find_all('tr'))
+    embed.add_field(name = "Loved", value = f"{npc} loves these", inline = False)
+    for i in range(2, tableLen):
+        gift = lovedGiftTable.select('tr')[i]
+        pic = gift.select('td')[0]
+        item = gift.select('td')[1]
+        name = item.text.strip()
+        link = item.find('a')
+        link = link['href']
+        if 'stardewvalley' not in link:
+            link = STARDEW_BASE_URL + link
+        embed.add_field(name = name, value = link, inline = True)
+    embed.add_field(name = "Liked", value = f"{npc} likes these", inline = False)
+    likedGiftTable = pageScraper.find_all(id = "roundedborder")[1]
+    tableLen = len(likedGiftTable.find_all('tr'))
+    for i in range(2, tableLen):
+        gift = likedGiftTable.select('tr')[i]
+        pic = gift.select('td')[0]
+        item = gift.select('td')[1]
+        name = item.text.strip()
+        link = item.find('a')
+        link = link['href']
+        if 'stardewvalley' not in link:
+            link = STARDEW_BASE_URL + link
         embed.add_field(name = name, value = link, inline = True)
     await ctx.send(embed = embed)
 
