@@ -196,6 +196,16 @@ async def _stardewExpandedGifts(ctx, npc: str):
         embed.add_field(name = name, value = link, inline = True)
     await ctx.send(embed = embed)
 
+@slash.slash(name = 'stardewBaseGifts', guild_ids = guild_ids,
+            description = "Shows Liked/Loved gifts for base NPCs in Stardew Valley",
+            options = [
+                    create_option(
+                        name = "npc",
+                        description = "Original NPC in Stardew Valley you want to gift to",
+                        option_type = 3,
+                        required = True
+                    )
+            ])
 async def _stardewBaseGifts(ctx, npc: str):
     npc = npc.capitalize()
     #Navigate to npc page
