@@ -196,16 +196,6 @@ async def _stardewExpandedGifts(ctx, npc: str):
         embed.add_field(name = name, value = link, inline = True)
     await ctx.send(embed = embed)
 
-@slash.slash(name = 'stardewBaseGifts', guild_ids = guild_ids,
-            description = "Shows Liked/Loved gifts for base NPCs in Stardew Valley",
-            options = [
-                    create_option(
-                        name = "npc",
-                        description = "Original NPC in Stardew Valley you want to gift to",
-                        option_type = 3,
-                        required = True
-                    )
-            ])
 async def _stardewBaseGifts(ctx, npc: str):
     npc = npc.capitalize()
     #Navigate to npc page
@@ -214,27 +204,30 @@ async def _stardewBaseGifts(ctx, npc: str):
     embed = discord.Embed(title = f"{npc}'s Loved/Liked Gifts",
                             url = STARDEW_BASE_URL + npc,
                             color = 0xFF0000)
-    npcPic = pageScraper.find_all('ul', class_ = "gallery")[1]
+    npcPic = pageScraper.find('ul', class_ = "portraitgallery")
     imgTag = npcPic.find_all('img')[0]
     # imgTag = npcPic.find('img')
     thumbnailPic = STARDEW_BASE_URL + imgTag['src']
     #Set embed thumbnail
     embed.set_thumbnail(url = thumbnailPic)
-    lovedGiftTable = pageScraper.find_all(id = "roundedborder")[0]
+    lovedGiftTable = pageScraper.find_all(id = "roundedborder")[0 + stardewTableOffset(npc)]
     tableLen = len(lovedGiftTable.find_all('tr'))
     embed.add_field(name = "Loved", value = f"{npc} loves these", inline = False)
+    print(tableLen)
     for i in range(2, tableLen):
         gift = lovedGiftTable.select('tr')[i]
+        print(gift)
         pic = gift.select('td')[0]
         item = gift.select('td')[1]
         name = item.text.strip()
         link = item.find('a')
+        print(link)
         link = link['href']
         if 'stardewvalley' not in link:
             link = STARDEW_BASE_URL + link
         embed.add_field(name = name, value = link, inline = True)
     embed.add_field(name = "Liked", value = f"{npc} likes these", inline = False)
-    likedGiftTable = pageScraper.find_all(id = "roundedborder")[1]
+    likedGiftTable = pageScraper.find_all(id = "roundedborder")[1 + stardewTableOffset(npc)]
     tableLen = len(likedGiftTable.find_all('tr'))
     for i in range(2, tableLen):
         gift = likedGiftTable.select('tr')[i]
@@ -247,5 +240,30 @@ async def _stardewBaseGifts(ctx, npc: str):
             link = STARDEW_BASE_URL + link
         embed.add_field(name = name, value = link, inline = True)
     await ctx.send(embed = embed)
+
+def stardewTableOffset(npc):
+    npcDict = {
+        'Pierre': 2,
+        'Krobus': 2,
+        'Robin': 7,
+        'Willy': 7,
+        'Marnie': 7,
+        'Jas': 7,
+        'Vincent': 7,
+        'Leo': 4,
+        'Pam': 3,
+        'Kent': 5,
+        'Gus': 6,
+        'Caroline': 9,
+        'Clint': 5,
+        'Evelyn': 7,
+        'George': 7,
+        'Emily': 7,
+        'Dwarf': 1
+    }
+    if npc in npcDict:
+        return npcDict[npc]
+    else:
+        return 0
 
 client.run(os.getenv('BOT_TOKEN'))
