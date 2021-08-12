@@ -164,7 +164,7 @@ async def _stardewExpandedGifts(ctx, npc: str):
     thumbnailPic = imgTag['src']
     #Set embed thumbnail
     embed.set_thumbnail(url = thumbnailPic)
-    lovedGiftTable = pageScraper.find_all("table", class_ = "article-table")[7]
+    lovedGiftTable = pageScraper.find_all("table", class_ = "article-table")[SVE_TableOffset(npc)]
     tableLen = len(lovedGiftTable.find_all('tr'))
     embed.add_field(name = "Loved", value = f"{npc} loves these", inline = False)
     for i in range(2, tableLen):
@@ -180,7 +180,7 @@ async def _stardewExpandedGifts(ctx, npc: str):
             link = SVE_WIKI_BASE_URL + link
         embed.add_field(name = name, value = link, inline = True)
     embed.add_field(name = "Liked", value = f"{npc} likes these", inline = False)
-    likedGiftTable = pageScraper.find_all("table", class_ = "article-table")[8]
+    likedGiftTable = pageScraper.find_all("table", class_ = "article-table")[1 + SVE_TableOffset(npc)]
     tableLen = len(likedGiftTable.find_all('tr'))
     for i in range(2, tableLen):
         gift = likedGiftTable.select('tr')[i]
@@ -270,6 +270,27 @@ def stardewTableOffset(npc):
         'George': 7,
         'Emily': 7,
         'Dwarf': 1
+    }
+    if npc in npcDict:
+        return npcDict[npc]
+    else:
+        return 0
+
+def SVE_TableOffset(npc):
+    npcDict = {
+        'Sophia': 14,
+        'Magnus': 8,
+        'Victor': 11,
+        'Andy': 6,
+        'Apples': 3,
+        'Gunther': 5,
+        'Marlon': 6,
+        'Martin': 4,
+        'Morgan': 3,
+        'Morris': 6,
+        'Susan': 7,
+        'Claire': 6,
+        'Olivia': 7,
     }
     if npc in npcDict:
         return npcDict[npc]
