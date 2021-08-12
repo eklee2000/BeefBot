@@ -165,8 +165,20 @@ async def _stardewExpandedGifts(ctx, npc: str):
     #Set embed thumbnail
     embed.set_thumbnail(url = thumbnailPic)
     lovedGiftTable = pageScraper.find_all("table", class_ = "article-table")[SVE_TableOffset(npc)]
+    universal = lovedGiftTable.select('tr')[1]
+    universalString = universal.select('td')[1]
+    universalString = universalString.text.strip()
+    #Find indices of 'All' so you know where to put new line
+    indices = list(find_all(universalString, 'All'))
+    addIter = 0
+    for i in indices:
+        i += addIter
+        universalString = universalString[:i] + '\n' + universalString[i:]
+        addIter += 1
+    #gets rid of beginning new line character
+    universalString.lstrip()
     tableLen = len(lovedGiftTable.find_all('tr'))
-    embed.add_field(name = "Loved", value = f"{npc} loves these", inline = False)
+    embed.add_field(name = "Loved", value = f"{npc} loves these{universalString}", inline = False)
     for i in range(2, tableLen):
         gift = lovedGiftTable.select('tr')[i]
         pic = gift.select('td')[0]
@@ -179,8 +191,20 @@ async def _stardewExpandedGifts(ctx, npc: str):
         if 'stardewvalleyexpanded' not in link:
             link = SVE_WIKI_BASE_URL + link
         embed.add_field(name = name, value = link, inline = True)
-    embed.add_field(name = "Liked", value = f"{npc} likes these", inline = False)
     likedGiftTable = pageScraper.find_all("table", class_ = "article-table")[1 + SVE_TableOffset(npc)]
+    universal = likedGiftTable.select('tr')[1]
+    universalString = universal.select('td')[1]
+    universalString = universalString.text.strip()
+    #Find indices of 'All' so you know where to put new line
+    indices = list(find_all(universalString, 'All'))
+    addIter = 0
+    for i in indices:
+        i += addIter
+        universalString = universalString[:i] + '\n' + universalString[i:]
+        addIter += 1
+    #gets rid of beginning new line character
+    universalString.lstrip()
+    embed.add_field(name = "Liked", value = f"{npc} likes these{universalString}", inline = False)
     tableLen = len(likedGiftTable.find_all('tr'))
     for i in range(2, tableLen):
         gift = likedGiftTable.select('tr')[i]
@@ -221,8 +245,20 @@ async def _stardewBaseGifts(ctx, npc: str):
     #Set embed thumbnail
     embed.set_thumbnail(url = thumbnailPic)
     lovedGiftTable = pageScraper.find_all(id = "roundedborder")[0 + stardewTableOffset(npc)]
+    universal = lovedGiftTable.select('tr')[1]
+    universalString = universal.select('td')[1]
+    universalString = universalString.text.strip()
+    #Find indices of 'All' so you know where to put new line
+    indices = list(find_all(universalString, 'All'))
+    addIter = 0
+    for i in indices:
+        i += addIter
+        universalString = universalString[:i] + '\n' + universalString[i:]
+        addIter += 1
+    #gets rid of beginning new line character
+    universalString.lstrip()
     tableLen = len(lovedGiftTable.find_all('tr'))
-    embed.add_field(name = "Loved", value = f"{npc} loves these", inline = False)
+    embed.add_field(name = "Loved", value = f"{npc} loves these{universalString}", inline = False)
     print(tableLen)
     for i in range(2, tableLen):
         gift = lovedGiftTable.select('tr')[i]
@@ -236,9 +272,21 @@ async def _stardewBaseGifts(ctx, npc: str):
         if 'stardewvalley' not in link:
             link = STARDEW_BASE_URL + link
         embed.add_field(name = name, value = link, inline = True)
-    embed.add_field(name = "Liked", value = f"{npc} likes these", inline = False)
     likedGiftTable = pageScraper.find_all(id = "roundedborder")[1 + stardewTableOffset(npc)]
+    universal = likedGiftTable.select('tr')[1]
+    universalString = universal.select('td')[1]
+    universalString = universalString.text.strip()
+    #Find indices of 'All' so you know where to put new line
+    indices = list(find_all(universalString, 'All'))
+    addIter = 0
+    for i in indices:
+        i += addIter
+        universalString = universalString[:i] + '\n' + universalString[i:]
+        addIter += 1
+    #gets rid of beginning new line character
+    universalString.lstrip()
     tableLen = len(likedGiftTable.find_all('tr'))
+    embed.add_field(name = "Liked", value = f"{npc} likes these{universalString}", inline = False)
     for i in range(2, tableLen):
         gift = likedGiftTable.select('tr')[i]
         pic = gift.select('td')[0]
