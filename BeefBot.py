@@ -90,6 +90,11 @@ async def beef(ctx, name):  # context = ctx
 async def Aidan(ctx):  # context = ctx
     await ctx.send('Aidan is significantly more attractive and more interesting than me, and so is his girlfriend. My girlfriend is very ugly. And so am I. These are facts. Debate me.')
 
+@client.command(aliases=['jeff'])
+async def Jeff(ctx):  # context = ctx
+    with open('images/jeff-mock-spongebob.png', 'rb') as f:
+        picture = discord.File(f)
+        await ctx.send(file=picture)
 
 @client.command()  # message analysis
 async def msgAnal(ctx):
