@@ -47,7 +47,7 @@ async def on_message(message):
         return
 
     if '<@&867166985136504862>' in message.content:
-        await message.channel.send('https://www.twitch.tv/notjiho')
+        await message.channel.send('https://www.twitch.tv/jihoxo')
     else:
         print(message.content)
 
